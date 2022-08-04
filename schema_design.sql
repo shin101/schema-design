@@ -6,16 +6,23 @@
  -- CREATE TABLE hospital (
 --     id SERIAL PRIMARY KEY,
 --     hospital_name TEXT NOT NULL,
---     doc_name TEXT NOT NULL
+--     hospital_id
 -- )
  -- CREATE TABLE doctor (
 --     id SERIAL PRIMARY KEY,
---     patient_id TEXT NOT NULL
--- )
+--     doc_name TEXT NOT NULL
+-- doc_id INTEGER ,
+-- hospital_id REFERENCES hospital
+ -- )
  -- CREATE TABLE patient (
 --     id SERIAL PRIMARY KEY,
 --     patient_name TEXT NOT NULL,
+--     doc_id INTEGER REFERENCES doctor,
 --     doc TEXT REFERENCES  hospital ON DELETE SET NULL
+--     diseases_id REFERENCES diseases
+-- )
+ -- CREATE TABLE diseases (
+--     id SERIAL PRIMARY KEY,
 --     diagnosis INTERGER
 -- )
  --  -- 2. Craigslist
@@ -27,7 +34,7 @@
  -- CREATE TABLE user (
 --     id SERIAL PRIMARY KEY,
 --     username TEXT UNIQUE,
---     preferred_region TEXT,
+--     preferred_region_id TEXT REFERENCES location
 -- );
  -- CREATE TABLE post (
 --     id SERIAL PRIMARY KEY,
@@ -35,10 +42,19 @@
 --     title TEXT,
 --     content TEXT,
 --     username REFERENCES user,
---     location TEXT,
---     category TEXT
+--     location_id INTEGER REFERENCES location,
+--     category_id REFERENCES category
 -- );
---  -- 3. Soccer League
+ -- create table location(
+-- id SERIAL PRIMARY KEY,
+-- location TEXT NOT NULL,
+-- preferred_region TEXT NOT NULL
+-- )
+ -- create table category(
+-- id SERIAL PRIMARY KEY,
+-- category_name TEXT NOT NULL,
+ -- )
+ --  -- 3. Soccer League
 --  Design a schema for a simple sports league. Your schema should keep track of
 -- All of the teams in the league
 -- All of the goals scored by every player for each game
@@ -48,18 +64,20 @@
 -- All of the start and end dates for season that a league has The standings/rankings of each team in the league (This doesn’t have to be its own table if the data can be captured somehow).
  -- CREATE TABLE league (
 --     id SERIAL PRIMARY KEY,
---     teams TEXT,
---     players TEXT
+--     teams_id INTEGER REFERENCES team,
+--     players_id REFERENCES team
 -- );
- -- CREATE TABLE player (
+ -- CREATE TABLE team (
 --     id SERIAL PRIMARY KEY,
+-- teams_name TEXT,
+-- player_name TEXT,
 --     num_goals INTEGER
 -- );
  -- CREATE TABLE game (
 --     id SERIAL PRIMARY KEY,
 --     referee TEXT,
 --     matches TEXT
--- );
+ -- );
  -- CREATE TABLE season(
 --     id SERIAL PRIMARY KEY,
 --     start_date TEXT,
